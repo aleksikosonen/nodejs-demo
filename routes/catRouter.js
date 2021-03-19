@@ -3,14 +3,14 @@
 const express = require('express');
 const router = express.Router();
 
+const catController = require('../controllers/catController');
+
+
 router.route('/')
-  .get((req, res) => {
-  console.log('get all cats');
-  res.send('Hello Cat!');
-})
-.post((req, res) => {
-  console.log('post cat');
-  res.send('post cat');
+  .get(catController.cat_list_get)
+  .post((req, res) => {
+    console.log('post cat');
+    res.send('post cat');
 });
 
 router.route('/:id')
