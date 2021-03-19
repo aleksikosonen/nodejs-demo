@@ -8,10 +8,7 @@ const catController = require('../controllers/catController');
 
 router.route('/')
   .get(catController.cat_list_get)
-  .post((req, res) => {
-    console.log('post cat');
-    res.send('post cat');
-});
+  .post(catController.cat_post_new_cat);
 
 router.route('/:id')
   .get(catController.cat_get_by_id)

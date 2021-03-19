@@ -7,6 +7,8 @@ const catRouter = require('./routes/catRouter');
 
 app.use(express.static('public'));
 
+app.use(express.urlencoded({extended: true}));
+
 app.get('/', (req, res) => {
   res.send('<h1>Terve maailmankaikkeus</h1>');
 });
