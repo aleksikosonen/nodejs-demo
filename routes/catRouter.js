@@ -14,10 +14,7 @@ router.route('/')
 });
 
 router.route('/:id')
-  .get((req,res)=> {
-      console.log('get one cat by id', req.params);
-      res.send(`Hello cat with id ${req.params.id}!`);
-  })
+  .get(catController.cat_get_by_id)
   .put( (req, res) => {
     console.log('put cat', req.params);
     res.send('put cat');
