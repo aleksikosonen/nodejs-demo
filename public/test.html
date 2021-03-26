@@ -6,21 +6,31 @@
 </head>
 <body>
 <h1>Demo page</h1>
-    <a href="/">Link to root of the server </a><br>
-    <a href="cat">Get all cats cat</a><br>
-    <a href="cat?sort=age">Cats sorted by age</a>
+<a href="/">Link to root of the server</a><br>
+<a href="cat">Get all cats</a><br>
+<a href="cat?sort=age">Cats sorted by age</a>
 
-    <form action="cat" method="post">
-        Name: <input type="text" name="name"> <br>
-        Age: <input type="number" name="age"> <br>
-        <select id="genre" name="genre">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="robot">Robot Cat</option>
-        </select>
+    <form action="cat" method="post"  enctype="multipart/form-data">
+        Name: <input type="text" name="name"><br>
+        Age: <input type="number" name="age"><br>
+        Owner: <select id="owner" name="owner">
+        <option value="1">John Doe</option>
+        <option value="2">Jane Doez</option>
+    </select><br>
+        Image: <input type="file" name="filename"><br>
         Weight: <input type="number" name="weight">
         <br>
         <input type="submit">
     </form>
+
+    <form action="user" method="post">
+        Users name: <input type="text" name="name"><br>
+        Users email: <input type="text" name="email"><br>
+        Users password: <input type="text" name="password"><br>
+
+
+        <input type="submit">
+
+</form>
 </body>
 </html>
