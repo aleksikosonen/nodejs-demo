@@ -2,8 +2,6 @@
 
 const catModel = require('../models/catModel');
 
-const cats = catModel.cats;
-
 const cat_list_get = async (req, res) => {
   console.log('get all cats from controllers', req.query);
   if (req.query.sort === 'age') {
@@ -21,9 +19,8 @@ const cat_list_get = async (req, res) => {
 };
 
 const cat_get_by_id = async (req, res) => {
-  console.log('jöö kiisu ' + req.params.id)
   const id = req.params.id;
-  const cat = await catModel.getCat(id);
+  const cat = await catModel.getCatById(id);
   res.json(cat);
 };
 
@@ -31,18 +28,27 @@ const cat_post_new_cat = async (req, res) => {
   console.log('post cat', req.body, req.file);
   const cat = req.body;
   cat.filename = req.file.filename;
-  const catid = await catModel.insertCat(cat);
-  cat.id = catid;
+  const catId = await catModel.insertCat(cat);
+  cat.id = catId;
   res.json(cat);
 };
 
-const cat_put_update_cat = async (req, res) => {
+const cat_update_put = async (req, res) => {
+  console.log('put cat update', req.body);
+  const cat = req.body;
+  const success = await catModel.updateCat(cat);
+  res.send(`cat updated ${success}`);
+};
+
+const cat_update_put_id = async (req, res) => {
   console.log('put cat', req.body);
   const cat = req.body;
   cat.id = req.params.id;
   const success = await catModel.updateCat(cat);
   res.send(`cat updated ${success}`);
 };
+
+
 
 const cat_delete_cat = async (req, res) => {
   console.log('delete cat', req.params.id);
@@ -54,6 +60,7 @@ module.exports = {
   cat_list_get,
   cat_get_by_id,
   cat_post_new_cat,
-  cat_put_update_cat,
   cat_delete_cat,
+  cat_update_put,
+  cat_update_put_id,
 };

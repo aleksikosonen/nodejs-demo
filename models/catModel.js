@@ -3,7 +3,7 @@
 const pool = require('../database/db');
 const promisePool = pool.promise();
 
-const getCat = async (id) => {
+const getCatById = async (id) => {
   try {
     const [rows] = await promisePool.query(`SELECT * FROM wop_cat WHERE cat_id=${id}`);
     return rows;
@@ -16,14 +16,11 @@ const getAllCats = async () => {
   try {
     // TODO: do the LEFT (or INNER) JOIN to get owner name too.
     const [rows] = await promisePool.query('SELECT * FROM wop_cat');
-    console.log('something back from db?', rows);
     return rows;
   } catch (e) {
     console.error('error', e.message);
   }
 };
-
-
 
 const getAllCatsSort = async (order) => {
   try {
@@ -42,7 +39,7 @@ const insertCat = async (cat) => {
 };
 
 const updateCat = async (cat) => {
-  const [row] = await promisePool.execute('UPDATE wop_cat SET name=?, age=?, weight=? WHERE cat_id=?', [cat.name, cat.age, cat.weight, cat.id]);
+  const [row] = await promisePool.execute('UPDATE wop_cat SET name=?, weight=?, age=?, owner=? WHERE cat_id=?', [cat.name, cat.weight, cat.age, cat.owner, cat.id]);
   console.log('update row', row);
   return true;
 };
@@ -54,7 +51,7 @@ const deleteCat = async (id) => {
 };
 
 module.exports = {
-  getCat,
+  getCatById,
   getAllCats,
   getAllCatsSort,
   insertCat,

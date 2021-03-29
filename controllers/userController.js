@@ -21,7 +21,6 @@ const user_list_get = async (req, res) => {
 };
 
 const user_get_by_id = async (req, res) => {
-  console.log('jöö ' + req.params.id)
   const id = req.params.id;
   const user = await userModel.getUser(id);
   res.json(user);

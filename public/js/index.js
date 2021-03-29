@@ -3,8 +3,8 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const catRouter = require('./routes/catRouter');
-const userRouter = require('./routes/userRouter');
+const catRouter = require('../../routes/catRouter');
+const userRouter = require('../../routes/userRouter');
 
 app.use(express.static('public'));
 
