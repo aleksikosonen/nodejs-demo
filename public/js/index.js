@@ -11,7 +11,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
 
 app.get('/', (req, res) => {
-  res.send('<h1>Terve maailmankaikkeus</h1>');
+  res.send('<h1>Terve maailmankaikkeus, branch week3</h1>');
 });
 
 app.use('/cat', catRouter);
