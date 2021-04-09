@@ -24,6 +24,8 @@ const user_create = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   console.log('userController user_create', req.body);
+  const salt = bcrypt.genSaltSync(12);
+  req.body.password = bcrypt.hashSync(req.body.password, salt);
   const id = await userModel.insertUser(req);
   const user = await userModel.getUser(id);
   res.send(user);

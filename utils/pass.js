@@ -13,15 +13,16 @@ passport.use(new Strategy(
       try {
         const [user] = await userModel.getUserLogin(params);
         console.log('Local strategy', user); // result is binary row
-        if (user === undefined) {
-          return done(null, false, {message: 'Incorrect credentials.'});
+        if (user === undefined) { // user not found
+          return done(null, false);
         }
-        if (user.password !== password) {
-          return done(null, false, {message: 'Incorrect credentials.'});
+        // TODO: use bcrypt to check of passwords don't match
+        if (!await bcrypt.compare(password, user.password)) { // passwords dont match
+          return done(null, false, {message: 'Incorrect credentials'});
         }
-        delete user.password // Delete password
-        return done(null, {...user}, {message: 'Logged In Successfully'}); // use spread syntax to create shallow copy to get rid of binary row type
-      } catch (err) {
+        delete user.password; // remove password propety from user object
+        return done(null, {...user}); // use spread syntax to create shallow copy to get rid of binary row type
+      } catch (err) { // general error
         return done(err);
       }
     }));

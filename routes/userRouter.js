@@ -3,9 +3,10 @@
 const express = require('express');
 const userController = require('../controllers/userController');
 const router = express.Router();
-const {body} = require('express-validator');
+
 
 router.get('/', userController.user_list_get);
+
 router.post('/',
     body('name').isLength({min:3}).escape().blacklist(';'),
     body('email').isEmail(),
