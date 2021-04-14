@@ -1,9 +1,8 @@
 'use strict';
 // userController
-const {validationResult} = require('express-validator');
-
+const bcrypt = require('bcryptjs');
 const userModel = require('../models/userModel');
-
+const {validationResult} = require('express-validator');
 
 const users = userModel.users;
 
@@ -18,17 +17,28 @@ const user_get_by_id = async (req, res) => {
   res.json(user);
 }
 
-const user_create = async (req, res) => {
+const user_create = async (req, res, next) => {
+  // Finds the validation errors in this request and wraps them in an object with handy functions
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
+  //here we will create a user with data comming from req...
   console.log('userController user_create', req.body);
+  //hasing password before insert into database
+  const user = {};
+  user.name = req.body.name;
+  user.username = req.body.username;
   const salt = bcrypt.genSaltSync(12);
-  req.body.password = bcrypt.hashSync(req.body.password, salt);
-  const id = await userModel.insertUser(req);
-  const user = await userModel.getUser(id);
-  res.send(user);
+  user.password = bcrypt.hashSync(req.body.password, salt);
+  console.log('userController user_create after hashing?', req.body, user);
+
+  const id = await userModel.insertUser(user);
+  if (id > 0) {
+    next();
+  } else {
+    res.status(400).json({error: 'register error'}).end();
+  }
 }
 
 const user_update = async (req, res) => {
