@@ -3,6 +3,11 @@
 require('dotenv').config();
 const express = require('express');
 
+const catRoute = require('./routes/catRouter');
+const userRoute = require('./routes/userRouter');
+const passport = require('./utils/pass');
+const authRoute = require('./routes/authRoute')
+
 const app = express();
 const port = process.env.HTTP_PORT || 3000;
 
@@ -12,11 +17,6 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   require('./utils/localhost')(app, process.env.HTTPS_PORT || 8000, port);
 }
-
-const catRoute = require('./routes/catRoute');
-const userRoute = require('./routes/userRoute');
-const passport = require('./utils/pass');
-const authRoute = require('./routes/authRoute')
 
 app.use(express.static('public')); // Define public folder
 app.use(express.static('uploads')); // Define uploads folder
